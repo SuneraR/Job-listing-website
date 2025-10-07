@@ -65,7 +65,7 @@ router.patch(
   "/jobseeker/details",
   verifyToken,
   upload.single("profile_picture"),
-  validateJobSeekerUpdate,
+  // validateJobSeekerUpdate,
   updateJobSeekerDetails
 );
 
