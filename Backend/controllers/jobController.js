@@ -13,7 +13,14 @@ import {
   findApprovedJobsByCompany,
   incrementJobViews,
 } from "../models/jobModel.js";
+
 // Note: SQL queries are written inline in this controller for flexibility
+import { updateApplicationStatusQuery } from "../queries/jobQueries.js";
+import { getApplicationDetailsQuery } from "../queries/jobQueries.js";
+import { checkExistingApplicationQuery } from "../queries/jobQueries.js";
+import { findApprovedJobByIdQuery } from "../queries/jobQueries.js";
+import { findSeekerByUserIdQuery } from "../queries/jobQueries.js";
+
 import { findEmployerProfileByUserId } from "../models/employerModel.js";
 import { findUserEmailById } from "../models/userModel.js";
 import nodemailer from "nodemailer";
@@ -1031,7 +1038,7 @@ export const updateApplicationStatus = async (req, res) => {
     // Fetch application + job + jobseeker info
     const [rows] = await pool.query(
       getApplicationDetailsQuery,
-      [application_id]
+      [applicationId]
     );
 
     if (rows.length === 0) {
@@ -1052,7 +1059,7 @@ export const updateApplicationStatus = async (req, res) => {
     // Update status
     await pool.query(
       updateApplicationStatusQuery,
-      [status, application_id]
+      [status, applicationId]
     );
 
     console.log("✅ Status updated successfully");
