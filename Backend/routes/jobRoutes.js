@@ -30,10 +30,17 @@ const router = express.Router();
 router.post(
   "/create",
   (req, res, next) => {
-    console.log("🎯 POST /job/create route hit");
-    console.log("  - Has file:", !!req.file);
+
+  console.log("🎯 POST /job/create route hit");
+  console.log("  - Has file:", !!req.file);
+
+  if (req.body && typeof req.body === 'object') {
     console.log("  - Body keys:", Object.keys(req.body));
-    next();
+  } else {
+    console.log("  - Body is null or not an object");
+  }
+
+  next();
   },
   verifyToken,
   isEmployer,
